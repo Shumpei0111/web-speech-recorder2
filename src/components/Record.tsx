@@ -1,4 +1,4 @@
-import { useState, useEffect, useId } from "react";
+import { useState, useEffect } from "react";
 import RecordRTC from "recordrtc";
 
 type Recording = {
@@ -36,10 +36,14 @@ export const Record = () => {
         const blob = recorder.getBlob();
         setIsRecording(false);
 
+        const id =
+          Math.random().toString(32).substring(2) +
+          new Date().getTime().toString(32);
+
         const newRecording: Recording = {
           audioURL: URL.createObjectURL(blob),
           blob,
-          id: useId(),
+          id,
         };
 
         setRecordings([...recordings, newRecording]);
