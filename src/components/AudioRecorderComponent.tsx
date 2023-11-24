@@ -25,6 +25,8 @@ function AudioRecorderComponent() {
 
   // 録音開始
   const handleStartRecording = async () => {
+    console.log("handleStartRecording");
+
     if (audioRecorder) {
       await audioRecorder.recStart();
     }
@@ -32,6 +34,9 @@ function AudioRecorderComponent() {
 
   // 録音停止
   const handleStopRecording = async () => {
+    console.log("handleStopRecording");
+
+    console.log("has audioRecorder: ", !!audioRecorder);
     if (audioRecorder) {
       const recordedBlob = await audioRecorder.recStop();
       if (recordedBlob) {
