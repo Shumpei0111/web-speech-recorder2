@@ -42,7 +42,7 @@ export const Record = () => {
           id: useId(),
         };
 
-        setRecordings((prev) => [...prev, newRecording]);
+        setRecordings([...recordings, newRecording]);
       });
     }
   };
