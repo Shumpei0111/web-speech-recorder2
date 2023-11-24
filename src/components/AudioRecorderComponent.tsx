@@ -4,6 +4,7 @@ import AudioRecordingModule from "../lib/record";
 function AudioRecorderComponent() {
   const [audioRecorder, setAudioRecorder] =
     useState<AudioRecordingModule | null>(null);
+  const [audioUrl, setAudioUrl] = useState<string>();
 
   // コンポーネントのマウント時に AudioRecordingModule のインスタンスを作成
   useEffect(() => {
@@ -25,7 +26,10 @@ function AudioRecorderComponent() {
   // 録音停止
   const handleStopRecording = async () => {
     if (audioRecorder) {
-      await audioRecorder.recStop();
+      const recordedBlob = await audioRecorder.recStop();
+      if (recordedBlob) {
+        setAudioUrl(URL.createObjectURL(recordedBlob));
+      }
     }
   };
 
@@ -33,6 +37,8 @@ function AudioRecorderComponent() {
     <div>
       <button onClick={handleStartRecording}>Start Recording</button>
       <button onClick={handleStopRecording}>Stop Recording</button>
+      <p>audioURL: {audioUrl}</p>
+      {audioUrl && <audio src={audioUrl} controls />}
     </div>
   );
 }

@@ -29,6 +29,8 @@ export default class AudioRecordingModule {
       this.recorder?.stopRecording();
     }
 
+    state = "recording";
+
     if (this.recorder) {
       this.recorder.destroy();
     }
@@ -51,8 +53,12 @@ export default class AudioRecordingModule {
       return;
     }
 
+    state = "stopped";
+
     // 録音を停止
     await this.recorder.stopRecording();
+
+    const blob = await this.recorder.getBlob();
 
     // ストリームの各トラックを停止（クリーンアップ）
     if (this.stream) {
@@ -63,5 +69,7 @@ export default class AudioRecordingModule {
     // RecordRTC インスタンスを破棄
     this.recorder.destroy();
     this.recorder = undefined;
+
+    return blob;
   }
 }
