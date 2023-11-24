@@ -1,11 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useId } from "react";
 import RecordRTC from "recordrtc";
+
+type Recording = {
+  audioURL: string;
+  blob: Blob;
+  id: string;
+};
 
 export const Record = () => {
   const [recorder, setRecorder] = useState<RecordRTC | null>(null);
-  const [audioURL, setAudioURL] = useState("");
   const [isRecording, setIsRecording] = useState(false);
   const [error, setError] = useState("");
+  const [recordings, setRecordings] = useState<Recording[]>([]);
 
   // 録音の開始
   const startRecording = async () => {
@@ -28,8 +34,15 @@ export const Record = () => {
     if (recorder) {
       recorder.stopRecording(() => {
         const blob = recorder.getBlob();
-        setAudioURL(URL.createObjectURL(blob));
         setIsRecording(false);
+
+        const newRecording: Recording = {
+          audioURL: URL.createObjectURL(blob),
+          blob,
+          id: useId(),
+        };
+
+        setRecordings((prev) => [...prev, newRecording]);
       });
     }
   };
@@ -48,7 +61,12 @@ export const Record = () => {
       <button onClick={isRecording ? stopRecording : startRecording}>
         {isRecording ? "録音停止" : "録音開始"}
       </button>
-      {audioURL && <audio src={audioURL} controls />}
+      {/* {audioURL && <audio src={audioURL} controls />} */}
+      {recordings.map((recording) => (
+        <div key={recording.id}>
+          <audio src={recording.audioURL} controls />
+        </div>
+      ))}
       {error && <p>エラー: {error}</p>}
     </div>
   );
