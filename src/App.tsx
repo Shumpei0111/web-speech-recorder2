@@ -1,10 +1,10 @@
-import AudioRecorderComponent from "./components/AudioRecorderComponent";
+import { Record } from "./components/Record";
 
 function App() {
   return (
     <main>
       <p>RTC</p>
-      <AudioRecorderComponent />
+      <Record />
     </main>
   );
 }
