@@ -48,8 +48,10 @@ export default class AudioRecordingModule {
   }
 
   public async recStop() {
+    console.log("this.recorder: ", this.recorder);
+
     // 録音が進行中でなければ何もしない
-    if (!this.recorder || this.recorder.state !== "recording") {
+    if (!this.recorder || state === "stopped") {
       return;
     }
 
