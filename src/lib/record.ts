@@ -5,7 +5,7 @@ export let state: "recording" | "stopped" = "stopped";
 export default class AudioRecordingModule {
   private stream?: MediaStream;
   private recorder?: RecordRTC;
-  private mediaDevice?: MediaDevices;
+  // private mediaDevice?: MediaDevices;
   public async setAudioStream() {
     try {
       this.getStream();
