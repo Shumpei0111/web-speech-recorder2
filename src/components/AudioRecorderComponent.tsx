@@ -35,20 +35,35 @@ function AudioRecorderComponent() {
   // 録音停止
   const handleStopRecording = async () => {
     console.log("handleStopRecording");
-
     console.log("has audioRecorder: ", !!audioRecorder);
     if (audioRecorder) {
       const recordedBlob = await audioRecorder.recStop();
+      console.log("recordedBlob: ", recordedBlob);
       if (recordedBlob) {
-        setAudioUrl(URL.createObjectURL(recordedBlob));
+        const url = URL.createObjectURL(recordedBlob);
+        console.log("url: ", url);
+        setAudioUrl(url);
       }
     }
   };
 
   return (
-    <div>
-      <button onClick={handleStartRecording}>Start Recording</button>
-      <button onClick={handleStopRecording}>Stop Recording</button>
+    <div className="max-w-600">
+      <p>{new Date().toLocaleString()}</p>
+      <div className="grid grid-cols-2 gap-2">
+        <button
+          className="border-[#c1c1c1] rounded-md hover:border-[#d8d8d8] border-[1px]"
+          onClick={handleStartRecording}
+        >
+          Start Recording
+        </button>
+        <button
+          className="border-[#c1c1c1] rounded-md hover:border-[#d8d8d8] border-[1px]"
+          onClick={handleStopRecording}
+        >
+          Stop Recording
+        </button>
+      </div>
       <p>audioURL: {audioUrl}</p>
       {audioUrl && <audio src={audioUrl} controls />}
     </div>
