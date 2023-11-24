@@ -59,6 +59,7 @@ export default class AudioRecordingModule {
     await this.recorder.stopRecording();
 
     const blob = await this.recorder.getBlob();
+    console.log("blob: ", blob);
 
     // ストリームの各トラックを停止（クリーンアップ）
     if (this.stream) {

@@ -10,9 +10,16 @@ function AudioRecorderComponent() {
   useEffect(() => {
     const recorder = new AudioRecordingModule();
     setAudioRecorder(recorder);
+
+    async function recStop() {
+      if (audioRecorder) {
+        await audioRecorder.recStop();
+      }
+    }
     // コンポーネントのアンマウント時にリソースをクリーンアップ
     return () => {
       // 必要に応じてクリーンアップのロジックをここに追加
+      recStop();
     };
   }, []);
 
