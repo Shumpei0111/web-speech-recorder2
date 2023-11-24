@@ -32,6 +32,7 @@ export default class AudioRecordingModule {
     }
 
     const stream = await this.getStream();
+    console.log("stream: ", stream);
 
     this.recorder = new RecordRTC(stream.clone(), {
       type: "audio",
@@ -55,9 +56,7 @@ export default class AudioRecordingModule {
 
     // 録音を停止
     await this.recorder.stopRecording();
-
     const blob = await this.recorder.getBlob();
-    console.log(this.recorder.toURL());
 
     console.log("blob: ", blob);
 
