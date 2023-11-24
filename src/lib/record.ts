@@ -1,7 +1,5 @@
 import RecordRTC, { StereoAudioRecorder } from "recordrtc";
 
-export let state: "recording" | "stopped" = "stopped";
-
 export default class AudioRecordingModule {
   private stream?: MediaStream;
   private recorder?: RecordRTC;
@@ -25,11 +23,9 @@ export default class AudioRecordingModule {
   }
 
   public async recStart() {
-    if (state == "recording") {
+    if (this.recorder?.state == "recording") {
       this.recorder?.stopRecording();
     }
-
-    state = "recording";
 
     if (this.recorder) {
       this.recorder.destroy();
@@ -51,11 +47,11 @@ export default class AudioRecordingModule {
     console.log("this.recorder: ", this.recorder);
 
     // 録音が進行中でなければ何もしない
-    if (!this.recorder || state === "stopped") {
+    if (!this.recorder || this.recorder.state !== "inactive") {
       return;
     }
 
-    state = "stopped";
+    console.log("録音を停止");
 
     // 録音を停止
     await this.recorder.stopRecording();
