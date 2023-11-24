@@ -13,7 +13,7 @@ export const Record = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [error, setError] = useState("");
   const [recordings, setRecordings] = useState<Recording[]>([]);
-  const { onStart, onStop, transcript } = useSpeechRecognition();
+  const { onStart, onStop, transcripts } = useSpeechRecognition();
 
   // 録音の開始
   const startRecording = async () => {
@@ -73,12 +73,14 @@ export const Record = () => {
       </button>
       {/* {audioURL && <audio src={audioURL} controls />} */}
       {recordings.map((recording) => (
-        <div key={recording.id}>
+        <article className="flex flex-col gap-2" key={recording.id}>
           <audio src={recording.audioURL} controls />
-        </div>
+        </article>
       ))}
       {error && <p>エラー: {error}</p>}
-      <p>{transcript}</p>
+      {transcripts.map((transcript, index) => (
+        <p key={index}>{transcript}</p>
+      ))}
     </div>
   );
 };

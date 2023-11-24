@@ -55,14 +55,15 @@ declare const window: IWindow;
 
 export const useSpeechRecognition = () => {
   const [transcript, setTranscript] = useState("");
+  const [transcripts, setTranscripts] = useState<string[]>([]);
   const SpeechRecognition =
     window.webkitSpeechRecognition || window.SpeechRecognition;
 
   const recognition = new SpeechRecognition();
 
   recognition.lang = "ja-JP";
-  /* 音声認識システムが中間的な結果を返すか、最終的な結果だけを返すか定義します。 */
-  recognition.interimResults = false; // 最終的な結果のみを返す
+  /* 音声認識システムが中間的な結果を返す(true)か、最終的な結果だけを返す(false)か定義します。 */
+  recognition.interimResults = true;
   /* 認識が開始されるたびに連続した結果をキャプチャする */
   recognition.continuous = true;
 
@@ -79,6 +80,7 @@ export const useSpeechRecognition = () => {
 
     if (event.results[0].isFinal && event.results[0][0]) {
       setTranscript(event.results[0][0].transcript);
+      setTranscripts([...transcripts, event.results[0][0].transcript]);
       console.log("transcript: ", transcript);
     }
   };
@@ -87,5 +89,6 @@ export const useSpeechRecognition = () => {
     onStart,
     onStop,
     transcript,
+    transcripts,
   };
 };
