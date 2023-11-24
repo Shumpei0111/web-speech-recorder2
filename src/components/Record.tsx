@@ -13,7 +13,7 @@ export const Record = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [error, setError] = useState("");
   const [recordings, setRecordings] = useState<Recording[]>([]);
-  const { onStart, transcript } = useSpeechRecognition();
+  const { onStart, onStop, transcript } = useSpeechRecognition();
 
   // 録音の開始
   const startRecording = async () => {
@@ -39,6 +39,8 @@ export const Record = () => {
       recorder.stopRecording(() => {
         const blob = recorder.getBlob();
         setIsRecording(false);
+
+        onStop();
 
         const id =
           Math.random().toString(32).substring(2) +

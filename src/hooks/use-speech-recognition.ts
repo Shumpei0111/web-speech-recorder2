@@ -70,21 +70,22 @@ export const useSpeechRecognition = () => {
     recognition.start();
   };
 
-  recognition.onresult = (event: ISpeechRecognitionEvent) => {
+  const onStop = () => {
     recognition.stop();
+  };
+
+  recognition.onresult = (event: ISpeechRecognitionEvent) => {
+    console.log("event.results[0][0]: ", event.results);
+
     if (event.results[0].isFinal && event.results[0][0]) {
       setTranscript(event.results[0][0].transcript);
       console.log("transcript: ", transcript);
     }
   };
 
-  recognition.onend = () => {
-    console.log("onend");
-    recognition.start();
-  };
-
   return {
     onStart,
+    onStop,
     transcript,
   };
 };
