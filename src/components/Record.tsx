@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import RecordRTC from "recordrtc";
+import { useSpeechRecognition } from "../hooks/use-speech-recognition";
 
 type Recording = {
   audioURL: string;
@@ -12,6 +13,7 @@ export const Record = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [error, setError] = useState("");
   const [recordings, setRecordings] = useState<Recording[]>([]);
+  const { onStart, transcript } = useSpeechRecognition();
 
   // 録音の開始
   const startRecording = async () => {
@@ -24,6 +26,8 @@ export const Record = () => {
       newRecorder.startRecording();
       setRecorder(newRecorder);
       setIsRecording(true);
+
+      onStart();
     } catch (err: any) {
       setError("録音の開始に失敗しました: " + err.message);
     }
@@ -72,6 +76,7 @@ export const Record = () => {
         </div>
       ))}
       {error && <p>エラー: {error}</p>}
+      <p>{transcript}</p>
     </div>
   );
 };
