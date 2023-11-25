@@ -13,7 +13,7 @@ export const Record = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [error, setError] = useState("");
   const [recordings, setRecordings] = useState<Recording[]>([]);
-  const { onStart, onStop, transcripts } = useSpeechRecognition();
+  const { onStart, onStop, transcripts, transcript } = useSpeechRecognition();
 
   // 録音の開始
   const startRecording = async () => {
@@ -68,19 +68,44 @@ export const Record = () => {
 
   return (
     <div>
-      <button onClick={isRecording ? stopRecording : startRecording}>
-        {isRecording ? "録音停止" : "録音開始"}
-      </button>
-      {/* {audioURL && <audio src={audioURL} controls />} */}
-      {recordings.map((recording) => (
-        <article className="flex flex-col gap-2" key={recording.id}>
-          <audio src={recording.audioURL} controls />
+      <div className="fixed bottom-40 left-1/2 -translate-x-1/2">
+        <RecButton
+          isRecording={isRecording}
+          stopCallback={stopRecording}
+          startCallback={startRecording}
+        />
+      </div>
+      <section className="px-16">
+        <article className="flex flex-col gap-8">
+          {recordings.map((recording) => (
+            <div key={recording.id}>
+              <audio src={recording.audioURL} controls />
+            </div>
+          ))}
         </article>
-      ))}
-      {error && <p>エラー: {error}</p>}
-      {transcripts.map((transcript, index) => (
-        <p key={index}>{transcript}</p>
-      ))}
+        {error && <p className="text-red text-12">エラー: {error}</p>}
+        {transcripts.map((transcript, index) => (
+          <p key={index}>{transcript}</p>
+        ))}
+        {transcript && <p>{transcript}</p>}
+      </section>
     </div>
   );
 };
+
+const RecButton = ({
+  isRecording,
+  stopCallback,
+  startCallback,
+}: {
+  isRecording: boolean;
+  stopCallback: () => void;
+  startCallback: () => void;
+}) => (
+  <button
+    className="rounded-full w-60 h-60 text-32 shadow-md bg-red hover:bg-black-20 duration-300 transition"
+    onClick={isRecording ? stopCallback : startCallback}
+  >
+    {isRecording ? "■" : "▶︎"}
+  </button>
+);

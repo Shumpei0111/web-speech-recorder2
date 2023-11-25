@@ -38,6 +38,7 @@ const theme = {
       100: "#2c2c2c",
     },
     white: "#ffffff",
+    red: "#D40B2F",
     // ====================
     inherit: colors.inherit,
     current: colors.current,
