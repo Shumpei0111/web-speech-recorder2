@@ -74,12 +74,17 @@ export const Record = () => {
           stopCallback={stopRecording}
           startCallback={startRecording}
         />
+        {transcript && (
+          <p className="text-center text-black-70">{transcript}</p>
+        )}
       </div>
-      <section className="px-16">
+      <section>
         <article className="flex flex-col gap-8">
           {recordings.map((recording) => (
-            <div key={recording.id}>
-              <audio src={recording.audioURL} controls />
+            <div key={recording.id} className="border-b border-black-10 py-4">
+              <div className="px-16">
+                <audio src={recording.audioURL} controls />
+              </div>
             </div>
           ))}
         </article>
@@ -87,7 +92,6 @@ export const Record = () => {
         {transcripts.map((transcript, index) => (
           <p key={index}>{transcript}</p>
         ))}
-        {transcript && <p>{transcript}</p>}
       </section>
     </div>
   );
