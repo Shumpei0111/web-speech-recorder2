@@ -90,7 +90,7 @@ export const Record = () => {
         />
       </div>
       <section>
-        <article className="flex flex-col gap-8">
+        <article className="flex flex-col gap-8 pb-170">
           {recordings.map((recording) => (
             <div key={recording.id} className="border-b border-black-10 py-4">
               <div className="p-12">
