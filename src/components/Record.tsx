@@ -7,6 +7,18 @@ type Recording = {
   audioURL: string;
   blob: Blob;
   id: string;
+  recDate: string;
+};
+
+const getCurrentDate = () => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1;
+  const date = now.getDate();
+  const hour = now.getHours();
+  const minute = now.getMinutes();
+  const seconds = now.getSeconds();
+  return `${year}/${month}/${date} ${hour}:${minute}:${seconds}`;
 };
 
 export const Record = () => {
@@ -51,6 +63,7 @@ export const Record = () => {
           audioURL: URL.createObjectURL(blob),
           blob,
           id,
+          recDate: getCurrentDate(),
         };
 
         setRecordings([...recordings, newRecording]);
@@ -69,7 +82,7 @@ export const Record = () => {
 
   return (
     <div>
-      <div className="fixed bottom-32 left-1/2 -translate-x-1/2 flex flex-col justify-center items-center bg-white z-50">
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 flex flex-col justify-center items-center bg-white z-50 w-375 pb-32 pt-10">
         <RecButton
           isRecording={isRecording}
           stopCallback={stopRecording}
@@ -80,8 +93,9 @@ export const Record = () => {
         <article className="flex flex-col gap-8">
           {recordings.map((recording) => (
             <div key={recording.id} className="border-b border-black-10 py-4">
-              <div className="p-16">
+              <div className="p-12">
                 <audio src={recording.audioURL} controls />
+                <p className="text-12 text-right pt-4">{recording.recDate}</p>
               </div>
             </div>
           ))}

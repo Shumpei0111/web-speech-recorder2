@@ -76,11 +76,7 @@ export const useSpeechRecognition = () => {
   };
 
   recognition.onresult = (event: ISpeechRecognitionEvent) => {
-    console.log("event.results[0][0]: ", event.results);
-
     if (event.results[0][0]) {
-      console.log("transcript: ", transcript);
-
       event.results[0].isFinal
         ? setTranscripts([...transcripts, event.results[0][0].transcript])
         : setTranscript(event.results[0][0].transcript);
