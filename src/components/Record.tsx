@@ -68,7 +68,7 @@ export const Record = () => {
 
   return (
     <div>
-      <div className="fixed bottom-32 left-1/2 -translate-x-1/2">
+      <div className="fixed bottom-32 left-1/2 -translate-x-1/2 flex flex-col">
         <RecButton
           isRecording={isRecording}
           stopCallback={stopRecording}
