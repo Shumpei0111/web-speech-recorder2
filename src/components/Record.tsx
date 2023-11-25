@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import RecordRTC from "recordrtc";
 import { useSpeechRecognition } from "../hooks/use-speech-recognition";
+import { Microphone } from "./icon/microphone";
 
 type Recording = {
   audioURL: string;
@@ -68,15 +69,15 @@ export const Record = () => {
 
   return (
     <div>
-      <div className="fixed bottom-32 left-1/2 -translate-x-1/2 flex flex-col">
+      <div className="fixed bottom-32 left-1/2 -translate-x-1/2 flex flex-col justify-center items-center">
         <RecButton
           isRecording={isRecording}
           stopCallback={stopRecording}
           startCallback={startRecording}
         />
-        {transcript && (
-          <p className="text-center text-black-70">{transcript}</p>
-        )}
+        <p className="text-center text-black-70 pt-8">
+          {transcript ? transcript : "録音しますか？"}
+        </p>
       </div>
       <section>
         <article className="flex flex-col gap-8">
@@ -89,9 +90,14 @@ export const Record = () => {
           ))}
         </article>
         {error && <p className="text-red text-12">エラー: {error}</p>}
-        {transcripts.map((transcript, index) => (
-          <p key={index}>{transcript}</p>
-        ))}
+        <article>
+          {transcripts.map((transcriptText, index) => (
+            <div>
+              <p key={index}>{transcript ? transcript : transcriptText}</p>
+              {/* <p key={index}>{transcriptText}</p> */}
+            </div>
+          ))}
+        </article>
       </section>
     </div>
   );
@@ -107,9 +113,17 @@ const RecButton = ({
   startCallback: () => void;
 }) => (
   <button
-    className="rounded-full w-60 h-60 text-32 shadow-md bg-red hover:bg-black-20 duration-300 transition"
+    className="rounded-full w-60 h-60 text-32 shadow-lg bg-red hover:bg-black-40 duration-300 transition"
     onClick={isRecording ? stopCallback : startCallback}
   >
-    {isRecording ? "■" : "▶︎"}
+    {isRecording ? "■" : <MicrophoneIcon />}
   </button>
 );
+
+const MicrophoneIcon = () => {
+  return (
+    <div className="text-white w-60 h-60 [&>svg]:w-30 [&>svg]:h-30 flex items-center justify-center">
+      <Microphone />
+    </div>
+  );
+};

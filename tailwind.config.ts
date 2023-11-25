@@ -51,6 +51,10 @@ const theme = {
   fontSize: {
     ...getNumberTheme(1, 100, (num) => [num, `${num / 16}rem`]),
   },
+  width: { ...getNumberTheme(0, 1200, (num) => [num, `${num}px`]) },
+  height: { ...getNumberTheme(0, 1200, (num) => [num, `${num}px`]) },
+  maxWidth: { ...getNumberTheme(0, 1200, (num) => [num, `${num}px`]) },
+  maxHeight: { ...getNumberTheme(0, 1200, (num) => [num, `${num}px`]) },
 } satisfies Config["theme"];
 
 const plugins = [
