@@ -69,15 +69,12 @@ export const Record = () => {
 
   return (
     <div>
-      <div className="fixed bottom-32 left-1/2 -translate-x-1/2 flex flex-col justify-center items-center">
+      <div className="fixed bottom-32 left-1/2 -translate-x-1/2 flex flex-col justify-center items-center bg-white z-50">
         <RecButton
           isRecording={isRecording}
           stopCallback={stopRecording}
           startCallback={startRecording}
         />
-        <p className="text-center text-black-70 pt-8">
-          {transcript ? transcript : "録音しますか？"}
-        </p>
       </div>
       <section>
         <article className="flex flex-col gap-8">
@@ -91,10 +88,12 @@ export const Record = () => {
         </article>
         {error && <p className="text-red text-12">エラー: {error}</p>}
         <article>
-          {transcripts.map((transcriptText, index) => (
+          {transcripts.map((transcriptItem, index) => (
             <div>
-              <p key={index}>{transcript ? transcript : transcriptText}</p>
-              {/* <p key={index}>{transcriptText}</p> */}
+              <p key={index}>
+                <span>{transcriptItem}</span>
+                {isRecording && <span>{transcript}</span>}
+              </p>
             </div>
           ))}
         </article>
