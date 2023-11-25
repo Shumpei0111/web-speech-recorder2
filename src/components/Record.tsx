@@ -68,7 +68,7 @@ export const Record = () => {
 
   return (
     <div>
-      <div className="fixed bottom-40 left-1/2 -translate-x-1/2">
+      <div className="fixed bottom-32 left-1/2 -translate-x-1/2">
         <RecButton
           isRecording={isRecording}
           stopCallback={stopRecording}
@@ -82,7 +82,7 @@ export const Record = () => {
         <article className="flex flex-col gap-8">
           {recordings.map((recording) => (
             <div key={recording.id} className="border-b border-black-10 py-4">
-              <div className="px-16">
+              <div className="p-16">
                 <audio src={recording.audioURL} controls />
               </div>
             </div>
