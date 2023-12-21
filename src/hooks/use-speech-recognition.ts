@@ -78,11 +78,17 @@ export const useSpeechRecognition = () => {
   };
 
   recognition.onresult = (event: ISpeechRecognitionEvent) => {
-    if (event.results[0][0]) {
-      event.results[0].isFinal
-        ? setTranscripts([...transcripts, event.results[0][0].transcript])
-        : // TODO: 記録された時間も保存して、リアルタイム感を強めるようにする
-          setTranscript(event.results[0][0].transcript);
+    console.log(event);
+
+    // if (event.results[0][0]) {
+    //   event.results[0].isFinal
+    //     ? setTranscripts([...transcripts, event.results[0][0].transcript])
+    //     : // TODO: 記録された時間も保存して、リアルタイム感を強めるようにする
+    //       setTranscript(event.results[0][0].transcript);
+    // }
+    if (event.results[0].isFinal && event.results[0][0]) {
+      setTranscript(event.results[0][0].transcript);
+      setTranscripts([...transcripts, event.results[0][0].transcript]);
     }
   };
 

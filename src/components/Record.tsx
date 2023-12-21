@@ -101,16 +101,16 @@ export const Record = () => {
           ))}
         </article>
         {error && <p className="text-red text-12">エラー: {error}</p>}
-        <article>
+        <div>
           {transcripts.map((transcriptItem, index) => (
-            <div className="px-16">
-              <p key={index}>
-                <span>{transcriptItem}</span>
-              </p>
-            </div>
+            <article key={index}>
+              <div className="px-16">
+                <p>{transcriptItem}</p>
+              </div>
+            </article>
           ))}
           {isRecording && <p className="px-16">{transcript}</p>}
-        </article>
+        </div>
       </section>
     </div>
   );
