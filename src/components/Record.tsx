@@ -82,15 +82,16 @@ export const Record = () => {
 
   return (
     <div>
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 flex flex-col justify-center items-center bg-white z-50 w-375 pb-32 pt-10">
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 flex flex-col justify-center items-center bg-white z-50 w-375 py-16">
         <RecButton
           isRecording={isRecording}
           stopCallback={stopRecording}
           startCallback={startRecording}
         />
+        <span className="text-12 pt-8">録音する</span>
       </div>
       <section>
-        <article className="flex flex-col gap-8 pb-170">
+        <article className="flex flex-col gap-8 max-h-320 overflow-y-scroll mb-20">
           {recordings.map((recording) => (
             <div key={recording.id} className="border-b border-black-10 py-4">
               <div className="p-12">
@@ -101,18 +102,26 @@ export const Record = () => {
           ))}
         </article>
         {error && <p className="text-red text-12">エラー: {error}</p>}
-        <div>
+        <div className="flex flex-col gap-32 px-16 overflow-y-scroll">
           {transcripts.map((transcriptItem, index) => (
-            <article key={index}>
-              <div className="px-16">
-                <p>{transcriptItem}</p>
-              </div>
-            </article>
+            <TransScriptBox key={index} transcript={transcriptItem} />
           ))}
           {isRecording && <p className="px-16">{transcript}</p>}
         </div>
       </section>
     </div>
+  );
+};
+
+const TransScriptBox = ({ transcript }: { transcript: string }) => {
+  return (
+    <article className="drop-shadow">
+      {transcript ? (
+        <p className="hukidashi px-16">{transcript}</p>
+      ) : (
+        <p className="hukidashi px-16">ざんねん、きこえなかったよ</p>
+      )}
+    </article>
   );
 };
 
@@ -126,7 +135,7 @@ const RecButton = ({
   startCallback: () => void;
 }) => (
   <button
-    className="rounded-full w-60 h-60 text-32 shadow-lg bg-red hover:bg-black-40 duration-300 transition"
+    className="rounded-full w-60 h-60 text-32 shadow-lg bg-[#E5671D] hover:bg-[#FFB2A9] duration-300 transition"
     onClick={isRecording ? stopCallback : startCallback}
   >
     {isRecording ? "■" : <MicrophoneIcon />}

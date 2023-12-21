@@ -3,5 +3,49 @@
 @tailwind utilities;
 
 html {
-  overflow-y: scroll;
+  overflow-y: hidden;
+}
+
+.hukidashi {
+  position: relative;
+  background: #7abf4a;
+  text-align: center;
+  border: 5px solid #7abf4a;
+  color: #ffffff;
+  font-size: 16px;
+  border-radius: 99999px;
+  -webkit-border-radius: 99999px;
+  -moz-border-radius: 99999px;
+  max-width: 200px;
+  width: fit-content;
+}
+.hukidashi:after,
+.hukidashi:before {
+  border: solid transparent;
+  content: "";
+  height: 0;
+  width: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 100%;
+  left: 14%;
+}
+.hukidashi:after {
+  border-color: rgba(0, 0, 255, 0);
+  border-top-width: 5px;
+  border-bottom-width: 5px;
+  border-left-width: 5px;
+  border-right-width: 5px;
+  margin-left: -5px;
+  border-top-color: #7abf4a;
+}
+.hukidashi:before {
+  border-color: rgba(0, 0, 255, 0);
+  border-top-width: 10px;
+  border-bottom-width: 10px;
+  border-left-width: 10px;
+  border-right-width: 10px;
+  margin-left: 10px;
+  margin-top: 5px;
+  border-top-color: #7abf4a;
 }
