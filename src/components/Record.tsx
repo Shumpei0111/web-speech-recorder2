@@ -26,7 +26,7 @@ export const Record = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [error, setError] = useState("");
   const [recordings, setRecordings] = useState<Recording[]>([]);
-  const { onStart, onStop, transcripts, transcript } = useSpeechRecognition();
+  const { onStart, onStop, transcripts } = useSpeechRecognition();
 
   // 録音の開始
   const startRecording = async () => {
@@ -82,34 +82,40 @@ export const Record = () => {
 
   return (
     <div>
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 flex flex-col justify-center items-center bg-white z-50 w-375 py-16">
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 flex flex-col justify-center items-center z-50 w-375 py-16">
         <RecButton
           isRecording={isRecording}
           stopCallback={stopRecording}
           startCallback={startRecording}
         />
-        <span className="text-12 pt-8">録音する</span>
       </div>
       <section>
-        <article className="flex flex-col gap-8 max-h-320 overflow-y-scroll mb-20">
+        <div className="flex flex-col gap-8 max-h-240 overflow-y-scroll audio-cover">
           {recordings.map((recording) => (
-            <div key={recording.id} className="border-b border-black-10 py-4">
-              <div className="p-12">
-                <audio src={recording.audioURL} controls />
-                <p className="text-12 text-right pt-4">{recording.recDate}</p>
-              </div>
-            </div>
+            <RecordAudioBox key={recording.id} recording={recording} />
           ))}
-        </article>
+        </div>
         {error && <p className="text-red text-12">エラー: {error}</p>}
-        <div className="flex flex-col gap-32 px-16 overflow-y-scroll">
-          {transcripts.map((transcriptItem, index) => (
-            <TransScriptBox key={index} transcript={transcriptItem} />
-          ))}
-          {isRecording && <p className="px-16">{transcript}</p>}
+        <div className="px-16">
+          <div className="py-16 flex flex-col gap-32 overflow-y-scroll h-[calc(100dvh_-_61px_-_240px)] pb-140">
+            {transcripts.map((transcriptItem, index) => (
+              <TransScriptBox key={index} transcript={transcriptItem} />
+            ))}
+          </div>
         </div>
       </section>
     </div>
+  );
+};
+
+const RecordAudioBox = ({ recording }: { recording: Recording }) => {
+  return (
+    <article className="border-b border-black-10 py-4">
+      <div className="p-12">
+        <audio src={recording.audioURL} controls />
+        <p className="text-12 text-right pt-4">{recording.recDate}</p>
+      </div>
+    </article>
   );
 };
 
@@ -135,7 +141,7 @@ const RecButton = ({
   startCallback: () => void;
 }) => (
   <button
-    className="rounded-full w-60 h-60 text-32 shadow-lg bg-[#E5671D] hover:bg-[#FFB2A9] duration-300 transition"
+    className="rounded-full w-60 h-60 text-32 shadow-lg bg-[#E5671D] hover:bg-[#FFB2A9] duration-300 transition drop-shadow-md"
     onClick={isRecording ? stopCallback : startCallback}
   >
     {isRecording ? "■" : <MicrophoneIcon />}
