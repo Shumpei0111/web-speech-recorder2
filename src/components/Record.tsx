@@ -41,8 +41,10 @@ export const Record = () => {
       setIsRecording(true);
 
       onStart();
-    } catch (err: any) {
-      setError("録音の開始に失敗しました: " + err.message);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError("録音の開始に失敗しました: " + err.message);
+      }
     }
   };
 
