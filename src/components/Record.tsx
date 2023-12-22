@@ -96,8 +96,8 @@ export const Record = () => {
           ))}
         </div>
         {error && <p className="text-red text-12">エラー: {error}</p>}
-        <div className="px-16">
-          <div className="py-16 flex flex-col gap-32 overflow-y-scroll h-[calc(100dvh_-_61px_-_240px)] pb-140">
+        <div>
+          <div className="p-16 flex flex-col gap-32 overflow-y-scroll h-[calc(100dvh_-_61px_-_240px)] pb-140">
             {transcripts.map((transcriptItem, index) => (
               <TransScriptBox key={index} transcript={transcriptItem} />
             ))}
@@ -141,7 +141,7 @@ const RecButton = ({
   startCallback: () => void;
 }) => (
   <button
-    className="rounded-full w-60 h-60 text-32 shadow-lg bg-[#E5671D] hover:bg-[#FFB2A9] duration-300 transition drop-shadow-md"
+    className="rounded-full w-60 h-60 text-32 shadow-lg bg-[#E5671D] hover:bg-[#FFB2A9] duration-300 transition drop-shadow-md active:translate-y-3"
     onClick={isRecording ? stopCallback : startCallback}
   >
     {isRecording ? "■" : <MicrophoneIcon />}
